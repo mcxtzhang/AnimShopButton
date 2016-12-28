@@ -4,6 +4,7 @@ import android.animation.Animator;
 import android.animation.AnimatorListenerAdapter;
 import android.animation.ValueAnimator;
 import android.content.Context;
+import android.content.res.TypedArray;
 import android.graphics.Canvas;
 import android.graphics.Color;
 import android.graphics.Paint;
@@ -217,6 +218,17 @@ public class AnimShopButton extends View {
         mHingTextSize = (int) TypedValue.applyDimension(TypedValue.COMPLEX_UNIT_SP, 12, context.getResources().getDisplayMetrics());
         mHintBgRoundValue = (int) TypedValue.applyDimension(TypedValue.COMPLEX_UNIT_DIP, 5, context.getResources().getDisplayMetrics());
         //end
+
+        TypedArray ta = context.obtainStyledAttributes(attrs, R.styleable.AnimShopButton, defStyleAttr, 0);
+        int indexCount = ta.getIndexCount();
+        for (int i = 0; i < indexCount; i++) {
+            int index = ta.getIndex(i);
+            if (index == R.styleable.AnimShopButton_gapBetweenCircle) {
+                mGapBetweenCircle = ta.getDimension(index, mGapBetweenCircle);
+            }
+        }
+
+        ta.recycle();
 
 
         mAddRegion = new Region();
