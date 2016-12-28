@@ -7,8 +7,8 @@ import android.support.v7.widget.RecyclerView;
 
 import com.mcxtzhang.commonadapter.rv.CommonAdapter;
 import com.mcxtzhang.commonadapter.rv.ViewHolder;
-import com.mcxtzhang.lib.AddDelView;
-import com.mcxtzhang.lib.IAddDelViewInterface;
+import com.mcxtzhang.lib.AnimShopButton;
+import com.mcxtzhang.lib.IOnAddDelListener;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -24,10 +24,10 @@ public class AddDelViewDemoActivity extends AppCompatActivity {
         rv.setAdapter(new CommonAdapter<AddDelBean>(this, getDatas(), R.layout.item_add_del) {
             @Override
             public void convert(ViewHolder holder, final AddDelBean addDelBean) {
-                AddDelView addDelView = holder.getView(R.id.addDelView);
-                addDelView.setCount(addDelBean.getCount());
-                addDelView.setMaxCount(addDelBean.getMaxCount());
-                addDelView.setOnAddDelListener(new IAddDelViewInterface.onAddDelListener() {
+                AnimShopButton animShopButton = holder.getView(R.id.addDelView);
+                animShopButton.setCount(addDelBean.getCount());
+                animShopButton.setMaxCount(addDelBean.getMaxCount());
+                animShopButton.setOnAddDelListener(new IOnAddDelListener() {
                     @Override
                     public void onAddSuccess(int count) {
                         addDelBean.setCount(count);

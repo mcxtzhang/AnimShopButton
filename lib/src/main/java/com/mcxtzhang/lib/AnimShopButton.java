@@ -24,8 +24,8 @@ import android.view.View;
  * 时间： 2016/11/18.
  */
 
-public class AddDelView extends View implements IAddDelViewInterface {
-    private static final String TAG = "zxt/" + AddDelView.class.getName();
+public class AnimShopButton extends View {
+    private static final String TAG = "zxt/" + AnimShopButton.class.getName();
     //控件 paddingLeft paddingTop + paint的width
     private int mLeft, mTop;
     //宽高
@@ -112,17 +112,17 @@ public class AddDelView extends View implements IAddDelViewInterface {
     private int mHintBgRoundValue;
 
     //点击回调
-    private IAddDelViewInterface.onAddDelListener mOnAddDelListener;
+    private IOnAddDelListener mOnAddDelListener;
 
-    public AddDelView(Context context) {
+    public AnimShopButton(Context context) {
         this(context, null);
     }
 
-    public AddDelView(Context context, AttributeSet attrs) {
+    public AnimShopButton(Context context, AttributeSet attrs) {
         this(context, attrs, 0);
     }
 
-    public AddDelView(Context context, AttributeSet attrs, int defStyleAttr) {
+    public AnimShopButton(Context context, AttributeSet attrs, int defStyleAttr) {
         super(context, attrs, defStyleAttr);
         init(context, attrs, defStyleAttr);
     }
@@ -137,7 +137,7 @@ public class AddDelView extends View implements IAddDelViewInterface {
      * @param count
      * @return
      */
-    public AddDelView setCount(int count) {
+    public AnimShopButton setCount(int count) {
         mCount = count;
         //复用机制的处理
         if (mCount == 0) {
@@ -152,7 +152,7 @@ public class AddDelView extends View implements IAddDelViewInterface {
         return this;
     }
 
-    public onAddDelListener getOnAddDelListener() {
+    public IOnAddDelListener getOnAddDelListener() {
         return mOnAddDelListener;
     }
 
@@ -166,7 +166,7 @@ public class AddDelView extends View implements IAddDelViewInterface {
      * @param maxCount
      * @return
      */
-    public AddDelView setMaxCount(int maxCount) {
+    public AnimShopButton setMaxCount(int maxCount) {
         mMaxCount = maxCount;
         return this;
     }
@@ -174,11 +174,11 @@ public class AddDelView extends View implements IAddDelViewInterface {
     /**
      * 设置加减监听器
      *
-     * @param onAddDelListener
+     * @param IOnAddDelListener
      * @return
      */
-    public AddDelView setOnAddDelListener(onAddDelListener onAddDelListener) {
-        mOnAddDelListener = onAddDelListener;
+    public AnimShopButton setOnAddDelListener(IOnAddDelListener IOnAddDelListener) {
+        mOnAddDelListener = IOnAddDelListener;
         return this;
     }
 
@@ -186,7 +186,7 @@ public class AddDelView extends View implements IAddDelViewInterface {
         return isNoDelFunc;
     }
 
-    public AddDelView setNoDelFunc(boolean noDelFunc) {
+    public AnimShopButton setNoDelFunc(boolean noDelFunc) {
         isNoDelFunc = noDelFunc;
         return this;
     }
@@ -552,7 +552,7 @@ public class AddDelView extends View implements IAddDelViewInterface {
             }
         } else {
             if (null != mOnAddDelListener) {
-                mOnAddDelListener.onDelFaild(mCount, onAddDelListener.FailType.COUNT_MIN);
+                mOnAddDelListener.onDelFaild(mCount, IOnAddDelListener.FailType.COUNT_MIN);
             }
         }
 
@@ -567,7 +567,7 @@ public class AddDelView extends View implements IAddDelViewInterface {
             }
         } else {
             if (null != mOnAddDelListener) {
-                mOnAddDelListener.onAddFailed(mCount, onAddDelListener.FailType.COUNT_MAX);
+                mOnAddDelListener.onAddFailed(mCount, IOnAddDelListener.FailType.COUNT_MAX);
             }
         }
     }
