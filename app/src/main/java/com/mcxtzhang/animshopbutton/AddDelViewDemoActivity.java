@@ -2,8 +2,10 @@ package com.mcxtzhang.animshopbutton;
 
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
+import android.support.v7.widget.GridLayoutManager;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.view.View;
 
 import com.mcxtzhang.commonadapter.rv.CommonAdapter;
 import com.mcxtzhang.commonadapter.rv.ViewHolder;
@@ -13,14 +15,30 @@ import com.mcxtzhang.lib.IOnAddDelListener;
 import java.util.ArrayList;
 import java.util.List;
 
+
 public class AddDelViewDemoActivity extends AppCompatActivity {
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_add_del_view_demo);
-        RecyclerView rv = (RecyclerView) findViewById(R.id.rv);
-        rv.setLayoutManager(new LinearLayoutManager(this));
+        final RecyclerView rv = (RecyclerView) findViewById(R.id.rv);
+
+        findViewById(R.id.btnChange).setOnClickListener(new View.OnClickListener() {
+            int i = 0;
+
+            @Override
+            public void onClick(View v) {
+                if ((i++ & 1) == 1) {
+                    rv.setLayoutManager(new LinearLayoutManager(AddDelViewDemoActivity.this));
+                } else {
+                    rv.setLayoutManager(new GridLayoutManager(AddDelViewDemoActivity.this, 2));
+                }
+
+            }
+        });
+
+
         rv.setAdapter(new CommonAdapter<AddDelBean>(this, getDatas(), R.layout.item_add_del) {
             @Override
             public void convert(ViewHolder holder, final AddDelBean addDelBean) {
@@ -63,7 +81,7 @@ public class AddDelViewDemoActivity extends AppCompatActivity {
         result.add(new AddDelBean(10, 1));
 
         result.add(new AddDelBean(1, 1));
-        result.add(new AddDelBean(3, 0));
+        result.add(new AddDelBean(0, 0));
 
         result.add(new AddDelBean(4, 2));
 

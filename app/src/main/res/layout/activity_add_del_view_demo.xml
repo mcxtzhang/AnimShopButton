@@ -11,8 +11,14 @@
     android:paddingTop="@dimen/activity_vertical_margin">
 
     <android.support.v7.widget.RecyclerView
-        tools:listitem="@layout/item_add_del"
         android:id="@+id/rv"
         android:layout_width="match_parent"
-        android:layout_height="match_parent"></android.support.v7.widget.RecyclerView>
+        android:layout_height="match_parent"
+        tools:listitem="@layout/item_add_del"></android.support.v7.widget.RecyclerView>
+
+    <Button
+        android:id="@+id/btnChange"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="切换"/>
 </RelativeLayout>

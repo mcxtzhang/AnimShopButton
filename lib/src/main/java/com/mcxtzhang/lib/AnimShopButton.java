@@ -26,94 +26,95 @@ import android.view.View;
  */
 
 public class AnimShopButton extends View {
-    private static final String TAG = "zxt/" + AnimShopButton.class.getName();
+    protected static final String TAG = "zxt/" + AnimShopButton.class.getName();
     //控件 paddingLeft paddingTop + paint的width
-    private int mLeft, mTop;
+    protected int mLeft, mTop;
     //宽高
-    private int mWidth, mHeight;
+    protected int mWidth, mHeight;
 
-    /**
-     * 没有删除按钮(xml)
-     */
-    private boolean isNoDelFunc;
 
     //加减的圆的Path的Region
-    private Region mAddRegion, mDelRegion;
-    private Path mAddPath, mDelPath;
+    protected Region mAddRegion, mDelRegion;
+    protected Path mAddPath, mDelPath;
 
     /**
      * 加按钮
      */
-    private Paint mAddPaint;
+    protected Paint mAddPaint;
     //加按钮是否开启fill模式 默认是stroke(xml)
-    private boolean isAddFillMode;
+    protected boolean isAddFillMode;
     //加按钮的背景色前景色(xml)
-    private int mAddEnableBgColor;
-    private int mAddEnableFgColor;
+    protected int mAddEnableBgColor;
+    protected int mAddEnableFgColor;
     //加按钮不可用时的背景色前景色(xml)
-    private int mAddDisableBgColor;
-    private int mAddDisableFgColor;
+    protected int mAddDisableBgColor;
+    protected int mAddDisableFgColor;
 
     /**
      * 减按钮
      */
-    private Paint mDelPaint;
+    protected Paint mDelPaint;
     //按钮是否开启fill模式 默认是stroke(xml)
-    private boolean isDelFillMode;
+    protected boolean isDelFillMode;
     //按钮的背景色前景色(xml)
-    private int mDelEnableBgColor;
-    private int mDelEnableFgColor;
+    protected int mDelEnableBgColor;
+    protected int mDelEnableFgColor;
     //按钮不可用时的背景色前景色(xml)
-    private int mDelDisableBgColor;
-    private int mDelDisableFgColor;
+    protected int mDelDisableBgColor;
+    protected int mDelDisableFgColor;
 
     //最大数量和当前数量(xml)
-    private int mMaxCount;
-    private int mCount;
+    protected int mMaxCount;
+    protected int mCount;
 
     //圆的半径
-    private float mRadius;
+    protected float mRadius;
     //圆圈的宽度
-    private float mCircleWidth;
+    protected float mCircleWidth;
     //线的宽度
-    private float mLineWidth;
+    protected float mLineWidth;
 
 
     /**
      * 两个圆之间的间距(xml)
      */
-    private float mGapBetweenCircle;
-    private float mTextSize;
-    private Paint mTextPaint;
-    private Paint.FontMetrics mFontMetrics;
+    protected float mGapBetweenCircle;
+    protected float mTextSize;
+    protected Paint mTextPaint;
+    protected Paint.FontMetrics mFontMetrics;
 
     //动画的基准值 动画：减 0~1, 加 1~0 ,
     // 普通状态下都显示时是0
-    private ValueAnimator mAnimAdd, mAniDel;
-    private float mAnimFraction;
+    protected ValueAnimator mAnimAdd, mAniDel;
+    protected float mAnimFraction;
 
     //展开 加入购物车动画
-    private ValueAnimator mAnimExpandHint;
-    private ValueAnimator mAnimReduceHint;
-    private float mAnimExpandHintFraction;
+    protected ValueAnimator mAnimExpandHint;
+    protected ValueAnimator mAnimReduceHint;
+
     //是否处于HintMode下 count = 0 时，且第一段收缩动画做完了，是true
-    private boolean isHintMode;
+    protected boolean isHintMode;
+
+    //提示语收缩动画 0-1 展开1-0
+    //普通模式时，应该是1， 只在 isHintMode true 才有效
+    protected float mAnimExpandHintFraction;
+
     //展开动画结束后 才显示文字
-    private boolean isShowHintText;
+    protected boolean isShowHintText;
 
     //hint文字 背景色前景色(xml) 大小
-    private Paint mHintPaint;
-    private int mHintBgColor;
-    private int mHingTextSize;
-    private String mHintText;
-    private int mHintFgColor;
+    protected Paint mHintPaint;
+    protected int mHintBgColor;
+    protected int mHingTextSize;
+    protected String mHintText;
+    protected int mHintFgColor;
     /**
      * 圆角值(xml)
      */
-    private int mHintBgRoundValue;
+    protected int mHintBgRoundValue;
 
     //点击回调
-    private IOnAddDelListener mOnAddDelListener;
+    protected IOnAddDelListener mOnAddDelListener;
 
     public AnimShopButton(Context context) {
         this(context, null);
@@ -148,8 +149,12 @@ public class AnimShopButton extends View {
             if (mAniDel != null && mAniDel.isRunning()) {
                 mAniDel.cancel();
             }
+            // 0 不显示 数字和-号
             mAnimFraction = 1;
+        } else {
+            mAnimFraction = 0;
         }
+        initHintSettings();
         return this;
     }
 
@@ -183,16 +188,7 @@ public class AnimShopButton extends View {
         return this;
     }
 
-    public boolean isNoDelFunc() {
-        return isNoDelFunc;
-    }
-
-    public AnimShopButton setNoDelFunc(boolean noDelFunc) {
-        isNoDelFunc = noDelFunc;
-        return this;
-    }
-
-    private void init(Context context, AttributeSet attrs, int defStyleAttr) {
+    protected void init(Context context, AttributeSet attrs, int defStyleAttr) {
 
         //模拟参数传入
         mGapBetweenCircle = TypedValue.applyDimension(TypedValue.COMPLEX_UNIT_DIP, 34, context.getResources().getDisplayMetrics());
@@ -399,12 +395,23 @@ public class AnimShopButton extends View {
 
         setMeasuredDimension(wSize, hSize);
 
+        //复用时会走这里，所以初始化一些UI显示的参数
+        mAnimFraction = 0;
+        initHintSettings();
+    }
+
+    /**
+     * 根据当前count数量 初始化 hint提示语相关变量
+     */
+    private void initHintSettings() {
         if (mCount == 0) {
             isHintMode = true;
             isShowHintText = true;
+            mAnimExpandHintFraction = 0;
         } else {
             isHintMode = false;
             isShowHintText = false;
+            mAnimExpandHintFraction = 1;
         }
     }
 
@@ -437,50 +444,48 @@ public class AnimShopButton extends View {
             }
             //}
         } else {
-            //如果没有删除按钮
-            if (!isNoDelFunc) {
-                //动画 mAnimFraction ：减 0~1, 加 1~0 ,
-                //动画位移Max,
-                float animOffsetMax = (mRadius * 2 + /*mGap * 2 + mTextPaint.measureText(mCount + "")*/mGapBetweenCircle);
-                //透明度动画的基准
-                int animAlphaMax = 255;
-                int animRotateMax = 360;
 
-                //左边
-                //背景 圆
-                if (mCount > 0) {
-                    mDelPaint.setColor(mDelEnableBgColor);
-                } else {
-                    mDelPaint.setColor(mDelDisableBgColor);
-                }
-                mDelPaint.setAlpha((int) (animAlphaMax * (1 - mAnimFraction)));
+            //动画 mAnimFraction ：减 0~1, 加 1~0 ,
+            //动画位移Max,
+            float animOffsetMax = (mRadius * 2 + /*mGap * 2 + mTextPaint.measureText(mCount + "")*/mGapBetweenCircle);
+            //透明度动画的基准
+            int animAlphaMax = 255;
+            int animRotateMax = 360;
 
-                mDelPaint.setStrokeWidth(mCircleWidth);
-                mDelPath.reset();
-                mDelPath.addCircle(animOffsetMax * mAnimFraction + mLeft + mRadius, mTop + mRadius, mRadius, Path.Direction.CW);
-                mDelRegion.setPath(mDelPath, new Region(mLeft, mTop, mWidth - getPaddingRight(), mHeight - getPaddingBottom()));
-                //canvas.drawCircle(mAnimOffset + mLeft + mRadius, mTop + mRadius, mRadius, mPaint);
-                canvas.drawPath(mDelPath, mDelPaint);
+            //左边
+            //背景 圆
+            if (mCount > 0) {
+                mDelPaint.setColor(mDelEnableBgColor);
+            } else {
+                mDelPaint.setColor(mDelDisableBgColor);
+            }
+            mDelPaint.setAlpha((int) (animAlphaMax * (1 - mAnimFraction)));
 
-                //前景 +
-                if (mCount > 0) {
-                    mDelPaint.setColor(mDelEnableFgColor);
-                } else {
-                    mDelPaint.setColor(mDelDisableFgColor);
-                }
-                mDelPaint.setStrokeWidth(mLineWidth);
-                //旋转动画
-                canvas.save();
-                canvas.translate(animOffsetMax * mAnimFraction + mLeft + mRadius, mTop + mRadius);
-                canvas.rotate((int) (animRotateMax * (1 - mAnimFraction)));
+            mDelPaint.setStrokeWidth(mCircleWidth);
+            mDelPath.reset();
+            mDelPath.addCircle(animOffsetMax * mAnimFraction + mLeft + mRadius, mTop + mRadius, mRadius, Path.Direction.CW);
+            mDelRegion.setPath(mDelPath, new Region(mLeft, mTop, mWidth - getPaddingRight(), mHeight - getPaddingBottom()));
+            //canvas.drawCircle(mAnimOffset + mLeft + mRadius, mTop + mRadius, mRadius, mPaint);
+            canvas.drawPath(mDelPath, mDelPaint);
+
+            //前景 +
+            if (mCount > 0) {
+                mDelPaint.setColor(mDelEnableFgColor);
+            } else {
+                mDelPaint.setColor(mDelDisableFgColor);
+            }
+            mDelPaint.setStrokeWidth(mLineWidth);
+            //旋转动画
+            canvas.save();
+            canvas.translate(animOffsetMax * mAnimFraction + mLeft + mRadius, mTop + mRadius);
+            canvas.rotate((int) (animRotateMax * (1 - mAnimFraction)));
         /*canvas.drawLine(mAnimOffset + mLeft + mRadius / 2, mTop + mRadius,
                 mAnimOffset + mLeft + mRadius / 2 + mRadius, mTop + mRadius,
                 mPaint);*/
-                canvas.drawLine(-mRadius / 2, 0,
-                        +mRadius / 2, 0,
-                        mDelPaint);
-                canvas.restore();
-            }
+            canvas.drawLine(-mRadius / 2, 0,
+                    +mRadius / 2, 0,
+                    mDelPaint);
+            canvas.restore();
 
 
             //数量
@@ -555,7 +560,7 @@ public class AnimShopButton extends View {
 
     }
 
-    private void onDelClick() {
+    protected void onDelClick() {
         if (mCount > 0) {
             mCount--;
             onCountDelListener();
@@ -570,7 +575,7 @@ public class AnimShopButton extends View {
 
     }
 
-    private void onAddClick() {
+    protected void onAddClick() {
         if (mCount < mMaxCount) {
             mCount++;
             onCountAddListener();
@@ -584,7 +589,7 @@ public class AnimShopButton extends View {
         }
     }
 
-    private void onCountAddListener() {
+    protected void onCountAddListener() {
         if (mCount == 1) {
             if (mAniDel != null && mAniDel.isRunning()) {
                 mAniDel.cancel();
@@ -596,7 +601,7 @@ public class AnimShopButton extends View {
         }
     }
 
-    private void onCountDelListener() {
+    protected void onCountDelListener() {
         if (mCount == 0) {
             if (mAnimAdd != null && mAnimAdd.isRunning()) {
                 mAnimAdd.cancel();
