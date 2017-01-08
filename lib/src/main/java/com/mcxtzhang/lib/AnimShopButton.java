@@ -147,6 +147,23 @@ public class AnimShopButton extends View {
     public AnimShopButton setCount(int count) {
         mCount = count;
         //先暂停所有动画
+        cancelAllAnim();
+
+        //复用机制的处理
+        if (mCount == 0) {
+            // 0 不显示 数字和-号
+            mAnimFraction = 1;
+        } else {
+            mAnimFraction = 0;
+        }
+        initHintSettings();
+        return this;
+    }
+
+    /**
+     * 暂停所有动画
+     */
+    private void cancelAllAnim() {
         if (mAnimAdd != null && mAnimAdd.isRunning()) {
             mAnimAdd.cancel();
         }
@@ -159,16 +176,6 @@ public class AnimShopButton extends View {
         if (mAnimReduceHint != null && mAnimReduceHint.isRunning()) {
             mAnimReduceHint.cancel();
         }
-
-        //复用机制的处理
-        if (mCount == 0) {
-            // 0 不显示 数字和-号
-            mAnimFraction = 1;
-        } else {
-            mAnimFraction = 0;
-        }
-        initHintSettings();
-        return this;
     }
 
     public IOnAddDelListener getOnAddDelListener() {
@@ -316,12 +323,12 @@ public class AnimShopButton extends View {
         mAnimReduceHint.addListener(new AnimatorListenerAdapter() {
             @Override
             public void onAnimationEnd(Animator animation) {
-                if (mCount == 1) {
+                if (mCount >= 1) {
                     //然后底色也不显示了
                     isHintMode = false;
                 }
-                if (mCount == 1) {
-                    Log.d(TAG, "现在还是1 开始收缩动画");
+                if (mCount >= 1) {
+                    Log.d(TAG, "现在还是》=1 开始收缩动画");
                     if (mAnimAdd != null && !mAnimAdd.isRunning()) {
                         mAnimAdd.start();
                     }
@@ -664,9 +671,7 @@ public class AnimShopButton extends View {
      */
     public void onCountAddSuccess() {
         if (mCount == 1) {
-            if (mAniDel != null && mAniDel.isRunning()) {
-                mAniDel.cancel();
-            }
+            cancelAllAnim();
             mAnimReduceHint.start();
         } else {
             mAnimFraction = 0;
@@ -679,9 +684,7 @@ public class AnimShopButton extends View {
      */
     public void onCountDelSuccess() {
         if (mCount == 0) {
-            if (mAnimAdd != null && mAnimAdd.isRunning()) {
-                mAnimAdd.cancel();
-            }
+            cancelAllAnim();
             mAniDel.start();
         } else {
             mAnimFraction = 0;
