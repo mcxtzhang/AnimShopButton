@@ -18,7 +18,11 @@ import android.view.MotionEvent;
 import android.view.View;
 
 /**
- * 介绍：仿饿了么加减Button
+ * 介绍：仿饿了么购物车加减Button
+ * 自带闪转腾挪动画
+ * <p>
+ * 项目地址：https://github.com/mcxtzhang/AnimShopButton
+ * <p>
  * 作者：zhangxutong
  * 邮箱：mcxtzhang@163.com
  * 主页：http://blog.csdn.net/zxt0601
@@ -41,7 +45,7 @@ public class AnimShopButton extends View {
      * 加按钮
      */
     protected Paint mAddPaint;
-    //加按钮是否开启fill模式 默认是stroke(xml)
+    //加按钮是否开启fill模式 默认是stroke(xml)(false)
     protected boolean isAddFillMode;
     //加按钮的背景色前景色(xml)
     protected int mAddEnableBgColor;
@@ -54,7 +58,7 @@ public class AnimShopButton extends View {
      * 减按钮
      */
     protected Paint mDelPaint;
-    //按钮是否开启fill模式 默认是stroke(xml)
+    //按钮是否开启fill模式 默认是stroke(xml)(false)
     protected boolean isDelFillMode;
     //按钮的背景色前景色(xml)
     protected int mDelEnableBgColor;
@@ -79,6 +83,7 @@ public class AnimShopButton extends View {
      * 两个圆之间的间距(xml)
      */
     protected float mGapBetweenCircle;
+    //绘制数量的textSize
     protected float mTextSize;
     protected Paint mTextPaint;
     protected Paint.FontMetrics mFontMetrics;
@@ -102,7 +107,7 @@ public class AnimShopButton extends View {
     //展开动画结束后 才显示文字
     protected boolean isShowHintText;
 
-    //hint文字 背景色前景色(xml) 大小
+    //数量为0时，hint文字 背景色前景色(xml) 大小
     protected Paint mHintPaint;
     protected int mHintBgColor;
     protected int mHingTextSize;
@@ -190,29 +195,8 @@ public class AnimShopButton extends View {
 
     protected void init(Context context, AttributeSet attrs, int defStyleAttr) {
 
-        //模拟参数传入
-        mGapBetweenCircle = TypedValue.applyDimension(TypedValue.COMPLEX_UNIT_DIP, 34, context.getResources().getDisplayMetrics());
-
-        isAddFillMode = true;
-        mAddEnableBgColor = 0xFFFFDC5B;
-        mAddEnableFgColor = Color.BLACK;
-        mAddDisableBgColor = 0xff979797;
-        mAddDisableFgColor = Color.BLACK;
-
-        isDelFillMode = false;
-        mDelEnableBgColor = 0xff979797;
-        mDelEnableFgColor = 0xff979797;
-        mDelDisableBgColor = 0xff979797;
-        mDelDisableFgColor = 0xff979797;
-
-        mMaxCount = 4;
-        mCount = 1;
-
-        mHintText = "加入购物车";
-        mHintBgColor = mAddEnableBgColor;
-        mHintFgColor = mAddEnableFgColor;
-        mHingTextSize = (int) TypedValue.applyDimension(TypedValue.COMPLEX_UNIT_SP, 12, context.getResources().getDisplayMetrics());
-        mHintBgRoundValue = (int) TypedValue.applyDimension(TypedValue.COMPLEX_UNIT_DIP, 5, context.getResources().getDisplayMetrics());
+        //模拟参数传入(设置初始值)
+        initDefaultValue(context);
         //end
 
         TypedArray ta = context.obtainStyledAttributes(attrs, R.styleable.AnimShopButton, defStyleAttr, 0);
@@ -221,9 +205,50 @@ public class AnimShopButton extends View {
             int index = ta.getIndex(i);
             if (index == R.styleable.AnimShopButton_gapBetweenCircle) {
                 mGapBetweenCircle = ta.getDimension(index, mGapBetweenCircle);
+            } else if (index == R.styleable.AnimShopButton_isAddFillMode) {
+                isAddFillMode = ta.getBoolean(index, isAddFillMode);
+            } else if (index == R.styleable.AnimShopButton_addEnableBgColor) {
+                mAddEnableBgColor = ta.getColor(index, mAddEnableBgColor);
+            } else if (index == R.styleable.AnimShopButton_addEnableFgColor) {
+                mAddEnableFgColor = ta.getColor(index, mAddEnableFgColor);
+            } else if (index == R.styleable.AnimShopButton_addDisableBgColor) {
+                mAddDisableBgColor = ta.getColor(index, mAddDisableBgColor);
+            } else if (index == R.styleable.AnimShopButton_addDisableFgColor) {
+                mAddDisableFgColor = ta.getColor(index, mAddDisableFgColor);
+            } else if (index == R.styleable.AnimShopButton_isDelFillMode) {
+                isDelFillMode = ta.getBoolean(index, isDelFillMode);
+            } else if (index == R.styleable.AnimShopButton_delEnableBgColor) {
+                mDelEnableBgColor = ta.getColor(index, mDelEnableBgColor);
+            } else if (index == R.styleable.AnimShopButton_delEnableFgColor) {
+                mDelEnableFgColor = ta.getColor(index, mDelEnableFgColor);
+            } else if (index == R.styleable.AnimShopButton_delDisableBgColor) {
+                mDelDisableBgColor = ta.getColor(index, mDelDisableBgColor);
+            } else if (index == R.styleable.AnimShopButton_delDisableFgColor) {
+                mDelDisableFgColor = ta.getColor(index, mDelDisableFgColor);
+            } else if (index == R.styleable.AnimShopButton_maxCount) {
+                mMaxCount = ta.getInteger(index, mMaxCount);
+            } else if (index == R.styleable.AnimShopButton_count) {
+                mCount = ta.getInteger(index, mCount);
+            } else if (index == R.styleable.AnimShopButton_radius) {
+                mRadius = ta.getDimension(index, mRadius);
+            } else if (index == R.styleable.AnimShopButton_circleStrokeWidth) {
+                mCircleWidth = ta.getDimension(index, mCircleWidth);
+            } else if (index == R.styleable.AnimShopButton_lineWidth) {
+                mLineWidth = ta.getDimension(index, mLineWidth);
+            } else if (index == R.styleable.AnimShopButton_numTextSize) {
+                mTextSize = ta.getDimension(index, mTextSize);
+            } else if (index == R.styleable.AnimShopButton_hintText) {
+                mHintText = ta.getString(index);
+            } else if (index == R.styleable.AnimShopButton_hintBgColor) {
+                mHintBgColor = ta.getColor(index, mHintBgColor);
+            } else if (index == R.styleable.AnimShopButton_hintFgColor) {
+                mHintFgColor = ta.getColor(index, mHintFgColor);
+            } else if (index == R.styleable.AnimShopButton_hingTextSize) {
+                mHingTextSize = ta.getDimensionPixelSize(index, mHingTextSize);
+            } else if (index == R.styleable.AnimShopButton_hintBgRoundValue) {
+                mHintBgRoundValue = ta.getDimensionPixelSize(index, mHintBgRoundValue);
             }
         }
-
         ta.recycle();
 
 
@@ -249,12 +274,7 @@ public class AnimShopButton extends View {
         mHintPaint.setStyle(Paint.Style.FILL);
         mHintPaint.setTextSize(mHingTextSize);
 
-        mRadius = TypedValue.applyDimension(TypedValue.COMPLEX_UNIT_DIP, 12.5f, getResources().getDisplayMetrics());
-        mCircleWidth = TypedValue.applyDimension(TypedValue.COMPLEX_UNIT_DIP, 1f, getResources().getDisplayMetrics());
-        mLineWidth = TypedValue.applyDimension(TypedValue.COMPLEX_UNIT_DIP, 2f, getResources().getDisplayMetrics());
 
-
-        mTextSize = TypedValue.applyDimension(TypedValue.COMPLEX_UNIT_SP, 14.5f, getResources().getDisplayMetrics());
         mTextPaint = new Paint(Paint.ANTI_ALIAS_FLAG);
         mTextPaint.setTextSize(mTextSize);
         mFontMetrics = mTextPaint.getFontMetrics();
@@ -361,6 +381,41 @@ public class AnimShopButton extends View {
         mAnimExpandHint.setDuration(350);
     }
 
+    /**
+     * 设置初始值
+     *
+     * @param context
+     */
+    private void initDefaultValue(Context context) {
+        mGapBetweenCircle = TypedValue.applyDimension(TypedValue.COMPLEX_UNIT_DIP, 34, context.getResources().getDisplayMetrics());
+
+        isAddFillMode = true;
+        mAddEnableBgColor = 0xFFFFDC5B;
+        mAddEnableFgColor = Color.BLACK;
+        mAddDisableBgColor = 0xff979797;
+        mAddDisableFgColor = Color.BLACK;
+
+        isDelFillMode = false;
+        mDelEnableBgColor = 0xff979797;
+        mDelEnableFgColor = 0xff979797;
+        mDelDisableBgColor = 0xff979797;
+        mDelDisableFgColor = 0xff979797;
+
+/*        mMaxCount = 4;
+        mCount = 1;*/
+
+        mRadius = TypedValue.applyDimension(TypedValue.COMPLEX_UNIT_DIP, 12.5f, getResources().getDisplayMetrics());
+        mCircleWidth = TypedValue.applyDimension(TypedValue.COMPLEX_UNIT_DIP, 1f, getResources().getDisplayMetrics());
+        mLineWidth = TypedValue.applyDimension(TypedValue.COMPLEX_UNIT_DIP, 2f, getResources().getDisplayMetrics());
+        mTextSize = TypedValue.applyDimension(TypedValue.COMPLEX_UNIT_SP, 14.5f, getResources().getDisplayMetrics());
+
+        mHintText = "加入购物车";
+        mHintBgColor = mAddEnableBgColor;
+        mHintFgColor = mAddEnableFgColor;
+        mHingTextSize = (int) TypedValue.applyDimension(TypedValue.COMPLEX_UNIT_SP, 12, context.getResources().getDisplayMetrics());
+        mHintBgRoundValue = (int) TypedValue.applyDimension(TypedValue.COMPLEX_UNIT_DIP, 5, context.getResources().getDisplayMetrics());
+    }
+
     @Override
     protected void onMeasure(int widthMeasureSpec, int heightMeasureSpec) {
         int wMode = MeasureSpec.getMode(widthMeasureSpec);
@@ -431,7 +486,8 @@ public class AnimShopButton extends View {
             //if (mCount == 0) {
             //背景
             mHintPaint.setColor(mHintBgColor);
-            RectF rectF = new RectF((mWidth - mRadius * 2) * mAnimExpandHintFraction, 0, getWidth(), getHeight());
+            RectF rectF = new RectF(mLeft + (mWidth - mRadius * 2) * mAnimExpandHintFraction, mTop
+                    , mWidth - mCircleWidth, mHeight - mCircleWidth);
             canvas.drawRoundRect(rectF, mHintBgRoundValue, mHintBgRoundValue, mHintPaint);
             if (isShowHintText) {
                 //前景文字

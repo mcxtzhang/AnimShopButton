@@ -1,0 +1,56 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/activity_test_attr"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    android:paddingBottom="@dimen/activity_vertical_margin"
+    android:paddingLeft="@dimen/activity_horizontal_margin"
+    android:paddingRight="@dimen/activity_horizontal_margin"
+    android:paddingTop="@dimen/activity_vertical_margin"
+    tools:context="com.mcxtzhang.animshopbutton.TestAttrActivity">
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="默认属性"/>
+
+    <com.mcxtzhang.lib.AnimShopButton
+        android:id="@+id/btn1"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        app:maxCount="3"/>
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="设置了两圆间距"/>
+
+    <com.mcxtzhang.lib.AnimShopButton
+        android:id="@+id/btn2"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        app:count="3"
+        app:gapBetweenCircle="90dp"
+        app:maxCount="99"/>
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="仿饿了么"/>
+
+    <com.mcxtzhang.lib.AnimShopButton
+        android:id="@+id/btnEle"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        app:addEnableBgColor="#3190E8"
+        app:addEnableFgColor="#ffffff"
+        app:hintBgColor="#3190E8"
+        app:hintBgRoundValue="15dp"
+        app:hintFgColor="#ffffff"
+        app:maxCount="99"/>
+
+</LinearLayout>

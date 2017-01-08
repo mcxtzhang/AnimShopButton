@@ -21,6 +21,9 @@ android {
 dependencies {
     compile fileTree(dir: 'libs', include: ['*.jar'])
     compile 'com.android.support:appcompat-v7:25.1.0'
+
+    //Adapter终结者 地址：https://github.com/mcxtzhang/all-base-adapter
     compile 'com.github.mcxtzhang:all-base-adapter:V1.4.0'
-    compile project (':lib')
+
+    compile project(':lib')
 }

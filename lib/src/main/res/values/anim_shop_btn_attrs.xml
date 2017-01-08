@@ -1,6 +1,45 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
     <declare-styleable name="AnimShopButton">
+        <!--加按钮是否开启fill模式 默认是stroke(false)-->
+        <attr name="isAddFillMode" format="boolean"/>
+        <!--加按钮的背景色前景色-->
+        <attr name="addEnableBgColor" format="color"/>
+        <attr name="addEnableFgColor" format="color"/>
+        <!--加按钮不可用时的背景色前景色-->
+        <attr name="addDisableBgColor" format="color"/>
+        <attr name="addDisableFgColor" format="color"/>
+
+        <!--减按钮是否开启fill模式 默认是stroke(false)-->
+        <attr name="isDelFillMode" format="boolean"/>
+        <!--减按钮的背景色前景色-->
+        <attr name="delEnableBgColor" format="color"/>
+        <attr name="delEnableFgColor" format="color"/>
+        <!--减按钮不可用时的背景色前景色-->
+        <attr name="delDisableBgColor" format="color"/>
+        <attr name="delDisableFgColor" format="color"/>
+
+        <!--圆的半径-->
+        <attr name="radius" format="dimension"/>
+        <!--圆圈的宽度-->
+        <attr name="circleStrokeWidth" format="dimension"/>
+        <!--线(+ - 符号)的宽度-->
+        <attr name="lineWidth" format="dimension"/>
+
+        <!--两个圆之间的间距-->
         <attr name="gapBetweenCircle" format="dimension"/>
+        <!--绘制数量的textSize-->
+        <attr name="numTextSize" format="dimension"/>
+        <!--最大数量和当前数量-->
+        <attr name="maxCount" format="integer"/>
+        <attr name="count" format="integer"/>
+
+        <!--数量为0时，hint文字 背景色前景色 大小,圆角值-->
+        <attr name="hintText" format="string"/>
+        <attr name="hintBgColor" format="color"/>
+        <attr name="hintFgColor" format="color"/>
+        <attr name="hingTextSize" format="dimension"/>
+        <attr name="hintBgRoundValue" format="dimension"/>
+
     </declare-styleable>
 </resources>
