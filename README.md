@@ -1,20 +1,26 @@
 # AnimShopButton
-A shopping cart button with a telescopic displacement rotation animation ...一个仿饿了么 带伸缩位移旋转动画的购物车按钮
+A shopping cart button with a telescopic displacement rotation animation ...
+
+一个仿饿了么 带伸缩位移旋转动画的购物车按钮
 
 注意，本控件非继承自`ViewGroup`,而是**纯自定义View**，实现的仿饿了么加入购物车控件，自带**闪转腾挪动画**的按钮。
 
 
 图1 项目中使用的效果，考虑到了`View`的**回收复用**，
+
 并且可以看到在`RecyclerView`中使用，切换`LayoutManager`也是没有问题的，
+
 ![项目中使用的效果](https://github.com/mcxtzhang/AnimShopButton/blob/master/gif/new.gif)
 
 图2 Demo效果，测试各种属性值
+
 ![图2 Demo效果，测试各种属性值](https://github.com/mcxtzhang/AnimShopButton/blob/master/gif/testAttr.gif)
 
 
 
 # Article
 相关博文：
+
 todo
 
 # Import
@@ -54,6 +60,7 @@ todo
 
 注意：
 加减点击后，具体的操作，要根据业务的不同来编写了，设计到实际的购物车可能还有写数据库操作，或者请求接口等，要操作成功后才执行动画、或者修改count，这一块代码每个人写法可能不同。
+
 使用时，可以重写`onDelClick()`和` onAddClick()`方法，并在合适的时机回调`onCountAddSuccess()`和` onCountDelSuccess()`以执行动画。
 
 效果图如图2.
