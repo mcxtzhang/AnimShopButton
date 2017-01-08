@@ -1,4 +1,5 @@
 # AnimShopButton
+[![](https://jitpack.io/v/mcxtzhang/AnimShopButton.svg)](https://jitpack.io/#mcxtzhang/AnimShopButton)
 A shopping cart button with a telescopic displacement rotation animation ...
 
 一个仿饿了么 带伸缩位移旋转动画的购物车按钮
@@ -24,7 +25,23 @@ A shopping cart button with a telescopic displacement rotation animation ...
 todo
 
 # Import
+**Step 1. Add the JitPack repository to your build file**
 
+**Step 1. 在项目根build.gradle文件中增加JitPack仓库依赖。** 
+```
+    allprojects {
+		repositories {
+			...
+			maven { url "https://jitpack.io" }
+		}
+	}
+```
+Step 2. Add the dependency
+```
+    dependencies {
+	        compile 'com.github.mcxtzhang:AnimShopButton:V1.0.0'
+	}
+```
 
 # Usage
  xml:
