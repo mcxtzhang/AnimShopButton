@@ -10,7 +10,8 @@
     <TextView
         android:layout_width="60dp"
         android:layout_height="match_parent"
-        android:text="@string/app_name"/>
+        android:text="@string/app_name"
+        android:visibility="gone"/>
 
     <com.mcxtzhang.lib.AnimShopButton
         android:id="@+id/addDelView"

@@ -146,14 +146,22 @@ public class AnimShopButton extends View {
      */
     public AnimShopButton setCount(int count) {
         mCount = count;
+        //先暂停所有动画
+        if (mAnimAdd != null && mAnimAdd.isRunning()) {
+            mAnimAdd.cancel();
+        }
+        if (mAniDel != null && mAniDel.isRunning()) {
+            mAniDel.cancel();
+        }
+        if (mAnimExpandHint != null && mAnimExpandHint.isRunning()) {
+            mAnimExpandHint.cancel();
+        }
+        if (mAnimReduceHint != null && mAnimReduceHint.isRunning()) {
+            mAnimReduceHint.cancel();
+        }
+
         //复用机制的处理
         if (mCount == 0) {
-            if (mAnimAdd != null && mAnimAdd.isRunning()) {
-                mAnimAdd.cancel();
-            }
-            if (mAniDel != null && mAniDel.isRunning()) {
-                mAniDel.cancel();
-            }
             // 0 不显示 数字和-号
             mAnimFraction = 1;
         } else {
@@ -426,10 +434,12 @@ public class AnimShopButton extends View {
             case MeasureSpec.EXACTLY:
                 break;
             case MeasureSpec.AT_MOST:
+                //不超过父控件给的范围内，自由发挥
                 int computeSize = (int) (getPaddingLeft() + mRadius * 2 +/* mGap * 2 + mTextPaint.measureText(mCount + "")*/mGapBetweenCircle + mRadius * 2 + getPaddingRight() + mCircleWidth * 2);
                 wSize = computeSize < wSize ? computeSize : wSize;
                 break;
             case MeasureSpec.UNSPECIFIED:
+                //自由发挥
                 computeSize = (int) (getPaddingLeft() + mRadius * 2 + /*mGap * 2 + mTextPaint.measureText(mCount + "")*/mGapBetweenCircle + mRadius * 2 + getPaddingRight() + mCircleWidth * 2);
                 wSize = computeSize;
                 break;
@@ -519,12 +529,13 @@ public class AnimShopButton extends View {
 
             mDelPaint.setStrokeWidth(mCircleWidth);
             mDelPath.reset();
+            //改变圆心的X坐标，实现位移
             mDelPath.addCircle(animOffsetMax * mAnimFraction + mLeft + mRadius, mTop + mRadius, mRadius, Path.Direction.CW);
             mDelRegion.setPath(mDelPath, new Region(mLeft, mTop, mWidth - getPaddingRight(), mHeight - getPaddingBottom()));
             //canvas.drawCircle(mAnimOffset + mLeft + mRadius, mTop + mRadius, mRadius, mPaint);
             canvas.drawPath(mDelPath, mDelPaint);
 
-            //前景 +
+            //前景 -
             if (mCount > 0) {
                 mDelPaint.setColor(mDelEnableFgColor);
             } else {
@@ -590,7 +601,7 @@ public class AnimShopButton extends View {
         int action = event.getAction();
         switch (action) {
             case MotionEvent.ACTION_DOWN:
-                //文字模式
+                //hint文字模式
                 if (isHintMode) {
                     onAddClick();
                     return true;
@@ -616,10 +627,13 @@ public class AnimShopButton extends View {
 
     }
 
+    /**
+     * 使用时，可以重写`onDelClick()`和` onAddClick()`方法，并在合适的时机回调`onCountAddSuccess()`和` onCountDelSuccess()`以执行动画。
+     */
     protected void onDelClick() {
         if (mCount > 0) {
             mCount--;
-            onCountDelListener();
+            onCountDelSuccess();
             if (null != mOnAddDelListener) {
                 mOnAddDelListener.onDelSuccess(mCount);
             }
@@ -634,7 +648,7 @@ public class AnimShopButton extends View {
     protected void onAddClick() {
         if (mCount < mMaxCount) {
             mCount++;
-            onCountAddListener();
+            onCountAddSuccess();
             if (null != mOnAddDelListener) {
                 mOnAddDelListener.onAddSuccess(mCount);
             }
@@ -645,7 +659,10 @@ public class AnimShopButton extends View {
         }
     }
 
-    protected void onCountAddListener() {
+    /**
+     * 数量增加成功后，使用者回调以执行动画。
+     */
+    public void onCountAddSuccess() {
         if (mCount == 1) {
             if (mAniDel != null && mAniDel.isRunning()) {
                 mAniDel.cancel();
@@ -657,7 +674,10 @@ public class AnimShopButton extends View {
         }
     }
 
-    protected void onCountDelListener() {
+    /**
+     * 数量减少成功后，使用者回调以执行动画。
+     */
+    public void onCountDelSuccess() {
         if (mCount == 0) {
             if (mAnimAdd != null && mAnimAdd.isRunning()) {
                 mAnimAdd.cancel();

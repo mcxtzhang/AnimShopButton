@@ -85,6 +85,10 @@ public class AddDelViewDemoActivity extends AppCompatActivity {
 
         result.add(new AddDelBean(4, 2));
 
+        for (int i = 0; i < 10; i++) {
+            result.add(new AddDelBean(10, i));
+        }
+
         return result;
     }
 }
