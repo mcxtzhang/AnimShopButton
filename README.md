@@ -1,51 +1,24 @@
 # AnimShopButton
-A shopping cart button with a telescopic displacement rotation animation ...一个带伸缩位移旋转动画的购物车按钮
+A shopping cart button with a telescopic displacement rotation animation ...一个仿饿了么 带伸缩位移旋转动画的购物车按钮
 
-注意，本控件非继承自`ViewGroup`,而是**纯自定义View**实现
+注意，本控件非继承自`ViewGroup`,而是**纯自定义View**，实现的仿饿了么加入购物车控件，自带**闪转腾挪动画**的按钮。
 
 
 图1 项目中使用的效果，考虑到了`View`的**回收复用**，
 并且可以看到在`RecyclerView`中使用，切换`LayoutManager`也是没有问题的，
-![项目中使用的效果](https://dn-mhke0kuv.qbox.me/39ec6aacb1b9e8f97ad9.gif)
+![项目中使用的效果](https://github.com/mcxtzhang/AnimShopButton/blob/master/gif/new.gif)
 
 图2 Demo效果，测试各种属性值
-![图2 Demo效果，测试各种属性值](https://dn-mhke0kuv.qbox.me/23f97dc1945988f46f91.gif)
+![图2 Demo效果，测试各种属性值](https://github.com/mcxtzhang/AnimShopButton/blob/master/gif/testAttr.gif)
 
 
 
 # Article
 相关博文：
+todo
 
+# Import
 
-
-
-# Attributes
-|name|format|description|中文解释
-|:---:|:---:|:---:|:---:|
-| isAddFillMode| boolean| Plus button is opened Fill mode default is stroke (false)|加按钮是否开启fill模式 默认是stroke(false)
-| addEnableBgColor| color|The background color of the plus button|加按钮的背景色
-| addEnableFgColor| color|The foreground color of the plus button|加按钮的前景色
-| addDisableBgColor| color|The background color when the button is not available|加按钮不可用时的背景色
-| addDisableFgColor| color |The foreground color when the button is not available|加按钮不可用时的前景色
-| isDelFillMode| boolean| Plus button is opened Fill mode default is stroke (false)|减按钮是否开启fill模式 默认是stroke(false)
-| delEnableBgColor| color|The background color of the minus button|减按钮的背景色
-| delEnableFgColor| color|The foreground color of the minus button|减按钮的前景色
-| delDisableBgColor| color|The background color when the button is not available|减按钮不可用时的背景色
-| delDisableFgColor| color |The foreground color when the button is not available|减按钮不可用时的前景色
-| radius| dimension|The radius of the circle|圆的半径
-| circleStrokeWidth| dimension|The width of the circle|圆圈的宽度
-| lineWidth| dimension|The width of the line (+ - sign)|线(+ - 符号)的宽度
-| gapBetweenCircle| dimension| The spacing between two circles|两个圆之间的间距
-| numTextSize| dimension| The textSize of draws the number|绘制数量的textSize
-| maxCount| integer| max count|最大数量
-| count| integer| current count|当前数量
-| hintText| string| The hint text when number is 0|数量为0时，hint文字
-| hintBgColor| color| The hint background when number is 0|数量为0时，hint背景色
-| hintFgColor| color| The hint foreground when number is 0|数量为0时，hint前景色
-| hingTextSize| dimension| The hint text size when number is 0|数量为0时，hint文字大小
-| hintBgRoundValue| dimension| The background fillet value when number is 0|数量为0时，hint背景圆角值
-
-这么多属性够你用了吧。
 
 # Usage
  xml:
@@ -84,5 +57,48 @@ A shopping cart button with a telescopic displacement rotation animation ...一�
 使用时，可以重写`onDelClick()`和` onAddClick()`方法，并在合适的时机回调`onCountAddSuccess()`和` onCountDelSuccess()`以执行动画。
 
 效果图如图2.
+
+# Attributes
+|name|format|description|中文解释
+|:---:|:---:|:---:|:---:|
+| isAddFillMode| boolean| Plus button is opened Fill mode default is stroke (false)|加按钮是否开启fill模式 默认是stroke(false)
+| addEnableBgColor| color|The background color of the plus button|加按钮的背景色
+| addEnableFgColor| color|The foreground color of the plus button|加按钮的前景色
+| addDisableBgColor| color|The background color when the button is not available|加按钮不可用时的背景色
+| addDisableFgColor| color |The foreground color when the button is not available|加按钮不可用时的前景色
+| isDelFillMode| boolean| Plus button is opened Fill mode default is stroke (false)|减按钮是否开启fill模式 默认是stroke(false)
+| delEnableBgColor| color|The background color of the minus button|减按钮的背景色
+| delEnableFgColor| color|The foreground color of the minus button|减按钮的前景色
+| delDisableBgColor| color|The background color when the button is not available|减按钮不可用时的背景色
+| delDisableFgColor| color |The foreground color when the button is not available|减按钮不可用时的前景色
+| radius| dimension|The radius of the circle|圆的半径
+| circleStrokeWidth| dimension|The width of the circle|圆圈的宽度
+| lineWidth| dimension|The width of the line (+ - sign)|线(+ - 符号)的宽度
+| gapBetweenCircle| dimension| The spacing between two circles|两个圆之间的间距
+| numTextSize| dimension| The textSize of draws the number|绘制数量的textSize
+| maxCount| integer| max count|最大数量
+| count| integer| current count|当前数量
+| hintText| string| The hint text when number is 0|数量为0时，hint文字
+| hintBgColor| color| The hint background when number is 0|数量为0时，hint背景色
+| hintFgColor| color| The hint foreground when number is 0|数量为0时，hint前景色
+| hingTextSize| dimension| The hint text size when number is 0|数量为0时，hint文字大小
+| hintBgRoundValue| dimension| The background fillet value when number is 0|数量为0时，hint背景圆角值
+
+这么多属性够你用了吧。
+
+
+## Where to find me:
+
+[Github](https://github.com/mcxtzhang)
+
+[CSDN](http://blog.csdn.net/zxt0601)
+
+[稀土掘金](http://gold.xitu.io/user/56de210b816dfa0052e66495)
+
+[简书](http://www.jianshu.com/users/8e91ff99b072/timeline)
+
+QQ群 ：**557266366**
+***
+
 
 
