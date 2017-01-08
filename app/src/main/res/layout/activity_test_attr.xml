@@ -27,7 +27,7 @@
     <TextView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="设置了两圆间距"/>
+        android:text="设置了两圆间距、hint和颜色"/>
 
     <com.mcxtzhang.lib.AnimShopButton
         android:id="@+id/btn2"
@@ -35,6 +35,8 @@
         android:layout_height="wrap_content"
         app:count="3"
         app:gapBetweenCircle="90dp"
+        app:hintFgColor="#ffffff"
+        app:hintText="小马快到碗里来"
         app:maxCount="99"/>
 
     <TextView
