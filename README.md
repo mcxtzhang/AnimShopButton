@@ -25,6 +25,8 @@ A shopping cart button with a telescopic displacement rotation animation ...
 
 http://blog.csdn.net/zxt0601/article/details/54235736
 
+https://gold.xitu.io/post/587220b9a22b9d005892422a
+
 # Import
 **Step 1. Add the JitPack repository to your build file**
 
