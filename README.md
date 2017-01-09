@@ -1,5 +1,6 @@
 # AnimShopButton
 [![](https://jitpack.io/v/mcxtzhang/AnimShopButton.svg)](https://jitpack.io/#mcxtzhang/AnimShopButton)
+
 A shopping cart button with a telescopic displacement rotation animation ...
 
 一个仿饿了么 带伸缩位移旋转动画的购物车按钮
@@ -22,7 +23,7 @@ A shopping cart button with a telescopic displacement rotation animation ...
 # Article
 相关博文：
 
-todo
+http://blog.csdn.net/zxt0601/article/details/54235736
 
 # Import
 **Step 1. Add the JitPack repository to your build file**
