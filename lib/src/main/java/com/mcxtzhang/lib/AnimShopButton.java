@@ -27,10 +27,16 @@ import android.view.View;
  * 邮箱：mcxtzhang@163.com
  * 主页：http://blog.csdn.net/zxt0601
  * 时间： 2016/11/18.
+ * 历史：
+ * 1 Feature : 增加一个开关 ignoreHintArea ：UI显示、动画是否忽略hint收缩区域
+ * 2 Feature : 增加一个int变量 perAnimDuration : 对每段动画的duration的设置方法
+ * Time: 2017/01/12
+ * Version : 1.1.0
  */
 
 public class AnimShopButton extends View {
     protected static final String TAG = "zxt/" + AnimShopButton.class.getName();
+    protected static final int DEFAULT_DURATION = 350;
     //控件 paddingLeft paddingTop + paint的width
     protected int mLeft, mTop;
     //宽高
@@ -97,6 +103,13 @@ public class AnimShopButton extends View {
     protected ValueAnimator mAnimExpandHint;
     protected ValueAnimator mAnimReduceHint;
 
+    protected int mPerAnimDuration = DEFAULT_DURATION;
+
+    /**
+     * 增加一个开关 ignoreHintArea：UI显示、动画是否忽略hint收缩区域
+     */
+    protected boolean ignoreHintArea;
+
     //是否处于HintMode下 count = 0 时，且第一段收缩动画做完了，是true
     protected boolean isHintMode;
 
@@ -150,13 +163,8 @@ public class AnimShopButton extends View {
         cancelAllAnim();
 
         //复用机制的处理
-        if (mCount == 0) {
-            // 0 不显示 数字和-号
-            mAnimFraction = 1;
-        } else {
-            mAnimFraction = 0;
-        }
-        initHintSettings();
+
+        initAnimSettings();
         return this;
     }
 
@@ -194,6 +202,204 @@ public class AnimShopButton extends View {
      */
     public AnimShopButton setMaxCount(int maxCount) {
         mMaxCount = maxCount;
+        return this;
+    }
+
+    public boolean isAddFillMode() {
+        return isAddFillMode;
+    }
+
+    public AnimShopButton setAddFillMode(boolean addFillMode) {
+        isAddFillMode = addFillMode;
+        return this;
+    }
+
+    public int getAddEnableBgColor() {
+        return mAddEnableBgColor;
+    }
+
+    public AnimShopButton setAddEnableBgColor(int addEnableBgColor) {
+        mAddEnableBgColor = addEnableBgColor;
+        return this;
+    }
+
+    public int getAddEnableFgColor() {
+        return mAddEnableFgColor;
+    }
+
+    public AnimShopButton setAddEnableFgColor(int addEnableFgColor) {
+        mAddEnableFgColor = addEnableFgColor;
+        return this;
+    }
+
+    public int getAddDisableBgColor() {
+        return mAddDisableBgColor;
+    }
+
+    public AnimShopButton setAddDisableBgColor(int addDisableBgColor) {
+        mAddDisableBgColor = addDisableBgColor;
+        return this;
+    }
+
+    public int getAddDisableFgColor() {
+        return mAddDisableFgColor;
+    }
+
+    public AnimShopButton setAddDisableFgColor(int addDisableFgColor) {
+        mAddDisableFgColor = addDisableFgColor;
+        return this;
+    }
+
+    public boolean isDelFillMode() {
+        return isDelFillMode;
+    }
+
+    public AnimShopButton setDelFillMode(boolean delFillMode) {
+        isDelFillMode = delFillMode;
+        return this;
+    }
+
+    public int getDelEnableBgColor() {
+        return mDelEnableBgColor;
+    }
+
+    public AnimShopButton setDelEnableBgColor(int delEnableBgColor) {
+        mDelEnableBgColor = delEnableBgColor;
+        return this;
+    }
+
+    public int getDelEnableFgColor() {
+        return mDelEnableFgColor;
+    }
+
+    public AnimShopButton setDelEnableFgColor(int delEnableFgColor) {
+        mDelEnableFgColor = delEnableFgColor;
+        return this;
+    }
+
+    public int getDelDisableBgColor() {
+        return mDelDisableBgColor;
+    }
+
+    public AnimShopButton setDelDisableBgColor(int delDisableBgColor) {
+        mDelDisableBgColor = delDisableBgColor;
+        return this;
+    }
+
+    public int getDelDisableFgColor() {
+        return mDelDisableFgColor;
+    }
+
+    public AnimShopButton setDelDisableFgColor(int delDisableFgColor) {
+        mDelDisableFgColor = delDisableFgColor;
+        return this;
+    }
+
+    public float getRadius() {
+        return mRadius;
+    }
+
+    public AnimShopButton setRadius(float radius) {
+        mRadius = radius;
+        return this;
+    }
+
+    public float getCircleWidth() {
+        return mCircleWidth;
+    }
+
+    public AnimShopButton setCircleWidth(float circleWidth) {
+        mCircleWidth = circleWidth;
+        return this;
+    }
+
+    public float getLineWidth() {
+        return mLineWidth;
+    }
+
+    public AnimShopButton setLineWidth(float lineWidth) {
+        mLineWidth = lineWidth;
+        return this;
+    }
+
+    public float getTextSize() {
+        return mTextSize;
+    }
+
+    public AnimShopButton setTextSize(float textSize) {
+        mTextSize = textSize;
+        return this;
+    }
+
+    public float getGapBetweenCircle() {
+        return mGapBetweenCircle;
+    }
+
+    public AnimShopButton setGapBetweenCircle(float gapBetweenCircle) {
+        mGapBetweenCircle = gapBetweenCircle;
+        return this;
+    }
+
+    public int getPerAnimDuration() {
+        return mPerAnimDuration;
+    }
+
+    public AnimShopButton setPerAnimDuration(int perAnimDuration) {
+        mPerAnimDuration = perAnimDuration;
+        return this;
+    }
+
+    public boolean isIgnoreHintArea() {
+        return ignoreHintArea;
+    }
+
+    public AnimShopButton setIgnoreHintArea(boolean ignoreHintArea) {
+        this.ignoreHintArea = ignoreHintArea;
+        return this;
+    }
+
+    public int getHintBgColor() {
+        return mHintBgColor;
+    }
+
+    public AnimShopButton setHintBgColor(int hintBgColor) {
+        mHintBgColor = hintBgColor;
+        return this;
+    }
+
+    public int getHingTextSize() {
+        return mHingTextSize;
+    }
+
+    public AnimShopButton setHingTextSize(int hingTextSize) {
+        mHingTextSize = hingTextSize;
+        return this;
+    }
+
+    public String getHintText() {
+        return mHintText;
+    }
+
+    public AnimShopButton setHintText(String hintText) {
+        mHintText = hintText;
+        return this;
+    }
+
+    public int getHintFgColor() {
+        return mHintFgColor;
+    }
+
+    public AnimShopButton setHintFgColor(int hintFgColor) {
+        mHintFgColor = hintFgColor;
+        return this;
+    }
+
+    public int getHintBgRoundValue() {
+        return mHintBgRoundValue;
+    }
+
+    public AnimShopButton setHintBgRoundValue(int hintBgRoundValue) {
+        mHintBgRoundValue = hintBgRoundValue;
         return this;
     }
 
@@ -262,6 +468,10 @@ public class AnimShopButton extends View {
                 mHingTextSize = ta.getDimensionPixelSize(index, mHingTextSize);
             } else if (index == R.styleable.AnimShopButton_hintBgRoundValue) {
                 mHintBgRoundValue = ta.getDimensionPixelSize(index, mHintBgRoundValue);
+            } else if (index == R.styleable.AnimShopButton_ignoreHintArea) {
+                ignoreHintArea = ta.getBoolean(index, false);
+            } else if (index == R.styleable.AnimShopButton_perAnimDuration) {
+                mPerAnimDuration = ta.getInteger(index, DEFAULT_DURATION);
             }
         }
         ta.recycle();
@@ -309,7 +519,7 @@ public class AnimShopButton extends View {
             public void onAnimationEnd(Animator animation) {
             }
         });
-        mAnimAdd.setDuration(350);
+        mAnimAdd.setDuration(mPerAnimDuration);
 
         //提示语收缩动画 0-1
         mAnimReduceHint = ValueAnimator.ofFloat(0, 1);
@@ -343,7 +553,7 @@ public class AnimShopButton extends View {
                 }
             }
         });
-        mAnimReduceHint.setDuration(350);
+        mAnimReduceHint.setDuration(ignoreHintArea ? 0 : mPerAnimDuration);
 
 
         //动画 -
@@ -367,7 +577,7 @@ public class AnimShopButton extends View {
                 }
             }
         });
-        mAniDel.setDuration(350);
+        mAniDel.setDuration(mPerAnimDuration);
         //提示语展开动画
         //分析这个动画，最初是个圆。 就是left 不断减小
         mAnimExpandHint = ValueAnimator.ofFloat(1, 0);
@@ -393,7 +603,7 @@ public class AnimShopButton extends View {
                 }
             }
         });
-        mAnimExpandHint.setDuration(350);
+        mAnimExpandHint.setDuration(ignoreHintArea ? 0 : mPerAnimDuration);
     }
 
     /**
@@ -467,15 +677,23 @@ public class AnimShopButton extends View {
 
         setMeasuredDimension(wSize, hSize);
 
+        //先暂停所有动画
+        cancelAllAnim();
         //复用时会走这里，所以初始化一些UI显示的参数
-        mAnimFraction = 0;
-        initHintSettings();
+        initAnimSettings();
     }
 
     /**
      * 根据当前count数量 初始化 hint提示语相关变量
      */
-    private void initHintSettings() {
+    private void initAnimSettings() {
+        if (mCount == 0) {
+            // 0 不显示 数字和-号
+            mAnimFraction = 1;
+        } else {
+            mAnimFraction = 0;
+        }
+
         if (mCount == 0) {
             isHintMode = true;
             isShowHintText = true;
@@ -498,7 +716,7 @@ public class AnimShopButton extends View {
 
     @Override
     protected void onDraw(Canvas canvas) {
-        if (isHintMode) {
+        if (!ignoreHintArea && isHintMode) {
             //add hint 展开动画
             //if (mCount == 0) {
             //背景

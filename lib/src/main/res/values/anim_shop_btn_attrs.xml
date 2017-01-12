@@ -34,12 +34,17 @@
         <attr name="maxCount" format="integer"/>
         <attr name="count" format="integer"/>
 
+        <!-- 增加一个开关 ignoreHintArea：UI显示、动画是否忽略hint收缩区域-->
+        <attr name="ignoreHintArea" format="boolean"/>
+
         <!--数量为0时，hint文字 背景色前景色 大小,圆角值-->
         <attr name="hintText" format="string"/>
         <attr name="hintBgColor" format="color"/>
         <attr name="hintFgColor" format="color"/>
         <attr name="hingTextSize" format="dimension"/>
         <attr name="hintBgRoundValue" format="dimension"/>
+
+        <attr name="perAnimDuration" format="integer"/>
 
     </declare-styleable>
 </resources>

@@ -42,6 +42,7 @@ public class AddDelViewDemoActivity extends AppCompatActivity {
         rv.setAdapter(new CommonAdapter<AddDelBean>(this, getDatas(), R.layout.item_add_del) {
             @Override
             public void convert(ViewHolder holder, final AddDelBean addDelBean) {
+                holder.setText(R.id.tv, addDelBean.getName());
                 AnimShopButton animShopButton = holder.getView(R.id.addDelView);
                 animShopButton.setCount(addDelBean.getCount());
                 animShopButton.setMaxCount(addDelBean.getMaxCount());
@@ -77,13 +78,13 @@ public class AddDelViewDemoActivity extends AppCompatActivity {
 
     public List<AddDelBean> getDatas() {
         List<AddDelBean> result = new ArrayList<>();
-        result.add(new AddDelBean(5, 1));
+/*        result.add(new AddDelBean(5, 1));
         result.add(new AddDelBean(10, 1));
 
         result.add(new AddDelBean(1, 1));
         result.add(new AddDelBean(0, 0));
 
-        result.add(new AddDelBean(4, 2));
+        result.add(new AddDelBean(4, 2));*/
 
         for (int i = 0; i < 10; i++) {
             result.add(new AddDelBean(10, i));

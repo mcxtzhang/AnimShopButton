@@ -27,7 +27,7 @@
     <TextView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="设置了两圆间距、hint和颜色"/>
+        android:text="设置了两圆间距、hint和颜色、每段动画动画时间"/>
 
     <com.mcxtzhang.lib.AnimShopButton
         android:id="@+id/btn2"
@@ -37,7 +37,8 @@
         app:gapBetweenCircle="90dp"
         app:hintFgColor="#ffffff"
         app:hintText="小马快到碗里来"
-        app:maxCount="99"/>
+        app:maxCount="99"
+        app:perAnimDuration="200"/>
 
     <TextView
         android:layout_width="wrap_content"
@@ -55,4 +56,21 @@
         app:hintFgColor="#ffffff"
         app:maxCount="99"/>
 
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="仿饿了么列表"/>
+
+    <com.mcxtzhang.lib.AnimShopButton
+        android:id="@+id/btnEleList"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        app:addEnableBgColor="#3190E8"
+        app:addEnableFgColor="#ffffff"
+        app:hintBgColor="#3190E8"
+        app:hintBgRoundValue="15dp"
+        app:hintFgColor="#ffffff"
+        app:ignoreHintArea="true"
+        app:maxCount="99"/>
 </LinearLayout>
