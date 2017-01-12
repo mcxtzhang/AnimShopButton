@@ -110,7 +110,8 @@ Step 2. Add the dependency
 | hintFgColor| color| The hint foreground when number is 0|数量为0时，hint前景色
 | hingTextSize| dimension| The hint text size when number is 0|数量为0时，hint文字大小
 | hintBgRoundValue| dimension| The background fillet value when number is 0|数量为0时，hint背景圆角值
-
+| ignoreHintArea| boolean| The UI/animation whether ignores the hint area|UI显示、动画是否忽略hint收缩区域
+| perAnimDuration| integer| The duration of each animation, in ms|每一段动画的执行时间，单位ms
 这么多属性够你用了吧。
 
 
@@ -126,6 +127,12 @@ Step 2. Add the dependency
 
 QQ群 ：**557266366**
 ***
+
+## History
+Version : 1.1.0,Time: 2017/01/12
+ * 1 Feature : Add a boolean variable `ignoreHintArea` ：The UI/animation whether ignores the hint area
+ * 2 Feature : Add a int variable `perAnimDuration` : The duration of each animation, in ms
+
 
 
 
