@@ -15,7 +15,13 @@
 
     <com.mcxtzhang.lib.AnimShopButton
         android:id="@+id/addDelView"
+
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        app:gapBetweenCircle="60dp"/>
+        app:gapBetweenCircle="60dp"
+
+
+        app:replenishText="不补货中"
+        app:replenishTextColor="@color/colorPrimary"
+        app:replenishTextSize="14sp"/>
 </LinearLayout>

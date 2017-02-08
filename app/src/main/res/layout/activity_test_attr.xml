@@ -73,4 +73,21 @@
         app:hintFgColor="#ffffff"
         app:ignoreHintArea="true"
         app:maxCount="99"/>
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="补货中"/>
+
+    <com.mcxtzhang.lib.AnimShopButton
+        android:id="@+id/btnReplenish"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        app:addEnableBgColor="#3190E8"
+        app:addEnableFgColor="#ffffff"
+        app:hintBgColor="#3190E8"
+        app:hintBgRoundValue="15dp"
+        app:hintFgColor="#ffffff"
+        app:ignoreHintArea="true"
+        app:maxCount="99"/>
 </LinearLayout>

@@ -23,7 +23,7 @@ public class AddDelViewDemoActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_add_del_view_demo);
         final RecyclerView rv = (RecyclerView) findViewById(R.id.rv);
-
+        rv.setLayoutManager(new LinearLayoutManager(AddDelViewDemoActivity.this));
         findViewById(R.id.btnChange).setOnClickListener(new View.OnClickListener() {
             int i = 0;
 
@@ -67,6 +67,7 @@ public class AddDelViewDemoActivity extends AppCompatActivity {
 
                     }
                 });
+                animShopButton.setReplenish(addDelBean.isReplenish());
 /*                if (holder.getLayoutPosition() == 1) {
                     addDelView.setNoDelFunc(true);
                 }else {
@@ -87,7 +88,7 @@ public class AddDelViewDemoActivity extends AppCompatActivity {
         result.add(new AddDelBean(4, 2));*/
 
         for (int i = 0; i < 10; i++) {
-            result.add(new AddDelBean(10, i));
+            result.add(new AddDelBean(10, i, (((i&1) == 0) ? true : false)));
         }
 
         return result;

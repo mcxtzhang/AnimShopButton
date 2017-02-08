@@ -28,10 +28,12 @@ import android.view.View;
  * 主页：http://blog.csdn.net/zxt0601
  * 时间： 2016/11/18.
  * 历史：
+ * Version : 1.1.0 Time: 2017/01/12
  * 1 Feature : 增加一个开关 ignoreHintArea ：UI显示、动画是否忽略hint收缩区域
  * 2 Feature : 增加一个int变量 perAnimDuration : 对每段动画的duration的设置方法
- * Time: 2017/01/12
- * Version : 1.1.0
+ * Version : 1.2.0 Time: 2017/02/08
+ * 1 Feature : 增加一个状态，正在补货中，此时不允许点击
+ * 通过setReplenish(boolean )和isReplenish()设置判断
  */
 
 public class AnimShopButton extends View {
@@ -131,6 +133,15 @@ public class AnimShopButton extends View {
      */
     protected int mHintBgRoundValue;
 
+    //Feature : 显示正在补货中，此时不允许点击
+    protected boolean isReplenish;
+    //画笔、颜色、大小、文字
+    protected Paint mReplenishPaint;
+    protected int mReplenishTextColor;
+    protected int mReplenishTextSize;
+    protected String mReplenishText;
+
+
     //点击回调
     protected IOnAddDelListener mOnAddDelListener;
 
@@ -164,7 +175,7 @@ public class AnimShopButton extends View {
 
         //复用机制的处理
 
-        initAnimSettings();
+        initAnimSettingsByCount();
         return this;
     }
 
@@ -202,6 +213,47 @@ public class AnimShopButton extends View {
      */
     public AnimShopButton setMaxCount(int maxCount) {
         mMaxCount = maxCount;
+        return this;
+    }
+
+    public boolean isReplenish() {
+        return isReplenish;
+    }
+
+    public AnimShopButton setReplenish(boolean replenish) {
+        isReplenish = replenish;
+        if (isReplenish && null == mReplenishPaint) {
+            mReplenishPaint = new Paint(Paint.ANTI_ALIAS_FLAG);
+            mReplenishPaint.setTextSize(mReplenishTextSize);
+            mReplenishPaint.setColor(mReplenishTextColor);
+        }
+        return this;
+    }
+
+    public int getReplenishTextColor() {
+        return mReplenishTextColor;
+    }
+
+    public AnimShopButton setReplenishTextColor(int replenishTextColor) {
+        mReplenishTextColor = replenishTextColor;
+        return this;
+    }
+
+    public int getReplenishTextSize() {
+        return mReplenishTextSize;
+    }
+
+    public AnimShopButton setReplenishTextSize(int replenishTextSize) {
+        mReplenishTextSize = replenishTextSize;
+        return this;
+    }
+
+    public String getReplenishText() {
+        return mReplenishText;
+    }
+
+    public AnimShopButton setReplenishText(String replenishText) {
+        mReplenishText = replenishText;
         return this;
     }
 
@@ -472,6 +524,12 @@ public class AnimShopButton extends View {
                 ignoreHintArea = ta.getBoolean(index, false);
             } else if (index == R.styleable.AnimShopButton_perAnimDuration) {
                 mPerAnimDuration = ta.getInteger(index, DEFAULT_DURATION);
+            } else if (index == R.styleable.AnimShopButton_replenishText) {
+                mReplenishText = ta.getString(index);
+            } else if (index == R.styleable.AnimShopButton_replenishTextColor) {
+                mReplenishTextColor = ta.getColor(index, mReplenishTextColor);
+            } else if (index == R.styleable.AnimShopButton_replenishTextSize) {
+                mReplenishTextSize = ta.getDimensionPixelSize(index, mReplenishTextSize);
             }
         }
         ta.recycle();
@@ -639,6 +697,11 @@ public class AnimShopButton extends View {
         mHintFgColor = mAddEnableFgColor;
         mHingTextSize = (int) TypedValue.applyDimension(TypedValue.COMPLEX_UNIT_SP, 12, context.getResources().getDisplayMetrics());
         mHintBgRoundValue = (int) TypedValue.applyDimension(TypedValue.COMPLEX_UNIT_DIP, 5, context.getResources().getDisplayMetrics());
+
+        mReplenishText = "补货中";
+        mReplenishTextColor = 0xfff32d3b;
+        mReplenishTextSize = mHingTextSize;
+
     }
 
     @Override
@@ -680,13 +743,13 @@ public class AnimShopButton extends View {
         //先暂停所有动画
         cancelAllAnim();
         //复用时会走这里，所以初始化一些UI显示的参数
-        initAnimSettings();
+        initAnimSettingsByCount();
     }
 
     /**
      * 根据当前count数量 初始化 hint提示语相关变量
      */
-    private void initAnimSettings() {
+    private void initAnimSettingsByCount() {
         if (mCount == 0) {
             // 0 不显示 数字和-号
             mAnimFraction = 1;
@@ -716,6 +779,16 @@ public class AnimShopButton extends View {
 
     @Override
     protected void onDraw(Canvas canvas) {
+        if (isReplenish) {
+            // 计算Baseline绘制的起点X轴坐标
+            int baseX = (int) (mWidth / 2 - mReplenishPaint.measureText(mReplenishText) / 2);
+            // 计算Baseline绘制的Y坐标
+            int baseY = (int) ((mHeight / 2) - ((mReplenishPaint.descent() + mReplenishPaint.ascent()) / 2));
+            canvas.drawText(mReplenishText, baseX, baseY, mReplenishPaint);
+            return;
+        }
+
+
         if (!ignoreHintArea && isHintMode) {
             //add hint 展开动画
             //if (mCount == 0) {
@@ -826,6 +899,9 @@ public class AnimShopButton extends View {
         int action = event.getAction();
         switch (action) {
             case MotionEvent.ACTION_DOWN:
+                if (isReplenish) {
+                    break;
+                }
                 //hint文字模式
                 if (isHintMode) {
                     onAddClick();
