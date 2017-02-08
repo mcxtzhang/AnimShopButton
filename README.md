@@ -18,6 +18,9 @@ A shopping cart button with a telescopic displacement rotation animation ...
 
 ![图2 Demo效果，测试各种属性值](https://github.com/mcxtzhang/AnimShopButton/blob/master/gif/testAttr.gif)
 
+图3 最新静态图
+
+![图3 最新静态图，测试各种属性值](https://github.com/mcxtzhang/AnimShopButton/blob/master/gif/attrs.png)
 
 
 # Article
@@ -46,7 +49,7 @@ http://edu.csdn.net/course/detail/3898
 Step 2. Add the dependency
 ```
     dependencies {
-	        compile 'com.github.mcxtzhang:AnimShopButton:V1.0.0'
+	        compile 'com.github.mcxtzhang:AnimShopButton:V1.2.0'
 	}
 ```
 
@@ -116,6 +119,10 @@ Step 2. Add the dependency
 | hintBgRoundValue| dimension| The background fillet value when number is 0|数量为0时，hint背景圆角值
 | ignoreHintArea| boolean| The UI/animation whether ignores the hint area|UI显示、动画是否忽略hint收缩区域
 | perAnimDuration| integer| The duration of each animation, in ms|每一段动画的执行时间，单位ms
+| hintText| string| The hint text when number is 0|数量为0时，hint文字
+| replenishTextColor| color| TextColor in replenish status|补货中状态的文字颜色
+| replenishTextSize| dimension| TextSize in replenish status|补货中状态的文字大小
+| replenishText| string | Text hint in replenish status|补货中状态的文字
 这么多属性够你用了吧。
 
 
