@@ -144,6 +144,9 @@ Version : 1.1.0,Time: 2017/01/12
  * 1 Feature : Add a boolean variable `ignoreHintArea` ：The UI/animation whether ignores the hint area
  * 2 Feature : Add a int variable `perAnimDuration` : The duration of each animation, in ms
 
+Version : 1.2.0 Time: 2017/02/08
+ * 1 Feature : Add a status: replenishment.Click is not allowed at this time.
+ * Judgment by setReplenish (boolean) and isReplenish ()
 
 
 
