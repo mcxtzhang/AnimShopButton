@@ -903,7 +903,7 @@ public class AnimShopButton extends View {
                     break;
                 }
                 //hint文字模式
-                if (isHintMode) {
+                if (isHintMode&&!ignoreHintArea) {
                     onAddClick();
                     return true;
                 } else {
